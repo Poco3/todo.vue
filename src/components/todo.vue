@@ -20,10 +20,10 @@
           <td>{{ todo.id }}</td>
           <td>{{ todo.comment }}</td>
           <td>
-            <button @click="statusBtn(todo)">{{ todo.status }}</button>
+            <button @click="changeTodo(todo)">{{ todo.status }}</button>
           </td>
           <td>
-            <button @click="deleteBtn(i)">削除</button>
+            <button @click="deleteTodo(i)">削除</button>
           </td>
         </tr>
       </tbody>
@@ -31,7 +31,7 @@
 
     <h2>新規タスクの追加</h2>
     <input type="text" v-model="texttodo" />
-    <button @click="addotodo">追加</button>
+    <button @click="addoTodo">追加</button>
   </div>
 </template>
 <script>
@@ -40,27 +40,25 @@ export default {
     return {
       texttodo: "",
       todos: [],
-      todo: {},
-      addTask: "",
       select: "all",
     };
   },
   methods: {
-    addotodo() {
+    addoTodo() {
       if (this.texttodo == "") return;
-      this.todo = {
+      const todo = {
         id: this.todos.length,
         comment: this.texttodo,
         status: "作業中",
       };
-      this.todos.push(this.todo);
+      this.todos.push(todo);
       this.texttodo = "";
     },
-    deleteBtn(i) {
+    deleteTodo(i) {
       this.todos.splice(i, 1);
       this.todos.reduce((index, todo) => (todo.id = index + 1), -1);
     },
-    statusBtn(todo) {
+    changeTodo(todo) {
       if (todo.status === "作業中") {
         todo.status = "完了";
       } else {
